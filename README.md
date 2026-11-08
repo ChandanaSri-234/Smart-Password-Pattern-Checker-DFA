@@ -76,7 +76,7 @@ Smart-Password-Pattern-Checker-DFA/
 screenshots/Home_Page.png
 
 ### Valid Password
-
+screenshots/Valid_Password.png
 
 ### Invalid Password
 ![Invalid Password](screenshots/Invalidpassword.png)
