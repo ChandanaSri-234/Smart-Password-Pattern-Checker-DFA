@@ -70,23 +70,6 @@ Smart-Password-Pattern-Checker-DFA/
 ├── requirements.txt
 └── README.md
 
-## 📸 Application Screenshots
-
-### Homepage
-screenshots/Home_Page.png
-
-### Valid Password
-screenshots/Valid_Password.png
-
-### Invalid Password
-![Invalid Password](screenshots/Invalidpassword.png)
-
-### DFA Diagram
-![DFA Diagram](screenshots/DFA_Diagram.png)
-
-### State Transition Details
-![State Transitions](screenshots/state_transition.png)
-
 ## 🧪 Sample Test Cases
 
 | Test Case | Password | Expected Result |
