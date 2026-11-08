@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Password Pattern Checker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div class="logo">🔐</div>
+        <h1>Smart Password Pattern Checker</h1>
+        <p>DFA-Based Password Security Validation System</p>
+    </header>
+
+    <section class="card checker">
+
+        <h2>Check Your Password</h2>
+
+        <form method="POST">
+
+            <label for="password">Enter Password</label>
+
+            <div class="input-group">
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                    autocomplete="off"
+                >
+
+                <button type="button" id="togglePassword">
+                    Show
+                </button>
+
+            </div>
+
+            <button type="submit" class="check-btn">
+                Check Password
+            </button>
+
+        </form>
+
+        <h3>Security Requirements</h3>
+
+        <div class="rules">
+
+            {% if result %}
+
+                {% for rule in result.rules %}
+
+                <div class="rule">
+                    <span class="{{ 'passed' if rule.passed else 'failed' }}">
+                        {{ '✓' if rule.passed else '✗' }}
+                    </span>
+
+                    {{ rule.name }}
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="rule">• Minimum 8 characters</div>
+                <div class="rule">• Uppercase letter (A-Z)</div>
+                <div class="rule">• Lowercase letter (a-z)</div>
+                <div class="rule">• Digit (0-9)</div>
+                <div class="rule">• Special character</div>
+                <div class="rule">• No prohibited patterns</div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    {% if result %}
+
+    <section class="card">
+
+        <h2>Validation Result</h2>
+
+        <div class="status {{ 'valid' if result.valid else 'invalid' }}">
+
+            {{ 'VALID PASSWORD ✓' if result.valid else 'INVALID PASSWORD ✗' }}
+
+        </div>
+
+        {% if result.violations %}
+
+            <h3>Rules Violated</h3>
+
+            {% for violation in result.violations %}
+
+                <div class="violation">
+                    ✗ {{ violation }}
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="success-message">
+                All security requirements satisfied!
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Password Analysis</h2>
+
+        <div class="analysis">
+
+            {% for key, value in result.analysis.items() %}
+
+            <div class="analysis-item">
+
+                <span>{{ key.replace('_', ' ').title() }}</span>
+
+                <strong>{{ value }}</strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>DFA State Transition Diagram</h2>
+
+        <p class="subtitle">
+            Character-by-character execution path of the DFA
+        </p>
+
+        <div class="diagram-container">
+
+            {% set total = result.transitions|length %}
+            {% set diagram_width = 150 * (total + 1) %}
+
+            <svg
+                width="{{ diagram_width }}"
+                height="210"
+                viewBox="0 0 {{ diagram_width }} 210"
+                role="img"
+                aria-label="DFA state transition path"
+            >
+
+                <defs>
+
+                    <marker
+                        id="arrow"
+                        markerWidth="10"
+                        markerHeight="10"
+                        refX="8"
+                        refY="3"
+                        orient="auto"
+                    >
+                        <path
+                            d="M0,0 L0,6 L9,3 Z"
+                            fill="#91a7ff"
+                        />
+                    </marker>
+
+                </defs>
+
+                <!-- Initial State -->
+
+                <circle
+                    cx="65"
+                    cy="85"
+                    r="30"
+                    class="state-circle"
+                />
+
+                <text
+                    x="65"
+                    y="90"
+                    class="state-text"
+                >q0</text>
+
+
+                <!-- Character transitions -->
+
+                {% for transition in result.transitions %}
+
+                    {% set x1 = 65 + (loop.index0 * 150) %}
+                    {% set x2 = x1 + 150 %}
+
+                    <line
+                        x1="{{ x1 + 33 }}"
+                        y1="85"
+                        x2="{{ x2 - 34 }}"
+                        y2="85"
+                        class="transition-line"
+                        marker-end="url(#arrow)"
+                    />
+
+                    <circle
+                        cx="{{ x2 }}"
+                        cy="85"
+                        r="30"
+                        class="{{ 'reject-circle' if transition.to == 'qReject' else ('accept-circle' if transition.to == 'qAccept' else 'state-circle') }}"
+                    />
+
+                    <text
+                        x="{{ x2 }}"
+                        y="90"
+                        class="state-text"
+                    >{{ transition.to }}</text>
+
+                    <text
+                        x="{{ (x1 + x2) / 2 }}"
+                        y="48"
+                        class="symbol-text"
+                    >{{ transition.symbol }}</text>
+
+                {% endfor %}
+
+                <text x="25" y="155" class="legend-text">
+                    START
+                </text>
+
+                <text
+                    x="{{ diagram_width - 100 }}"
+                    y="155"
+                    class="legend-text"
+                >
+                    FINAL STATE
+                </text>
+
+            </svg>
+
+        </div>
+
+
+        <h3>State Transition Details</h3>
+
+        <div class="transition-list">
+
+            {% for transition in result.transitions %}
+
+            <div class="transition-item">
+
+                <strong>{{ transition.from }}</strong>
+
+                <span> — {{ transition.symbol }} → </span>
+
+                <strong class="{{ 'reject-text' if transition.to == 'qReject' else ('accept-text' if transition.to == 'qAccept' else '') }}">
+                    {{ transition.to }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="final-state">
+
+            Final DFA State:
+
+            <strong class="{{ 'accept-text' if result.valid else 'reject-text' }}">
+                {{ result.final_state }}
+            </strong>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <footer>
+        <p>Smart Password Pattern Checker | Python DFA Project</p>
+    </footer>
+
+</div>
+
+
+<script>
+
+    const passwordInput = document.getElementById("password");
+
+    const toggleButton = document.getElementById("togglePassword");
+
+    toggleButton.addEventListener("click", function () {
+
+        if (passwordInput.type === "password") {
+
+            passwordInput.type = "text";
+
+            toggleButton.textContent = "Hide";
+
+        } else {
+
+            passwordInput.type = "password";
+
+            toggleButton.textContent = "Show";
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

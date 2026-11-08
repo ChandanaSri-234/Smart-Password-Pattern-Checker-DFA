@@ -1,0 +1,295 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #101426;
+    color: #ffffff;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.header h1 {
+    font-size: 30px;
+    color: #a8b9ff;
+    margin-bottom: 12px;
+}
+
+.header p {
+    color: #a8abc2;
+}
+
+.card {
+    background: #1b2239;
+    border: 1px solid #343d5e;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: #b7c6ff;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #d3d9ff;
+    margin: 22px 0 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #58648c;
+    background: #101426;
+    color: white;
+    font-size: 16px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+}
+
+#togglePassword {
+    background: #343d5e;
+    color: white;
+}
+
+.check-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    background: #657cf0;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.check-btn:hover {
+    background: #8295ff;
+}
+
+.rules {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.rule {
+    padding: 13px;
+    background: #252e49;
+    border-radius: 8px;
+    color: #e0e4f5;
+}
+
+.passed {
+    color: #4ade80;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.failed {
+    color: #ff7777;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.status {
+    padding: 18px;
+    border-radius: 9px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.valid {
+    background: #123c2c;
+    color: #4ade80;
+}
+
+.invalid {
+    background: #4b2028;
+    color: #ff8585;
+}
+
+.violation {
+    color: #ff8585;
+    margin: 12px 0;
+}
+
+.success-message {
+    color: #4ade80;
+    margin-top: 15px;
+}
+
+.analysis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.analysis-item {
+    background: #252e49;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-wrap: anywhere;
+}
+
+.analysis-item span {
+    color: #b7bfdc;
+    font-size: 14px;
+}
+
+.analysis-item strong {
+    font-size: 17px;
+}
+
+.subtitle {
+    color: #a8abc2;
+    margin-bottom: 20px;
+}
+
+.diagram-container {
+    width: 100%;
+    overflow-x: auto;
+    background: #11182c;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.diagram-container svg {
+    display: block;
+}
+
+.state-circle {
+    fill: #283d78;
+    stroke: #8eafff;
+    stroke-width: 2;
+}
+
+.accept-circle {
+    fill: #123c2c;
+    stroke: #4ade80;
+    stroke-width: 3;
+}
+
+.reject-circle {
+    fill: #4b2028;
+    stroke: #ff7777;
+    stroke-width: 3;
+}
+
+.state-text {
+    fill: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+.transition-line {
+    stroke: #91a7ff;
+    stroke-width: 2;
+}
+
+.symbol-text {
+    fill: #dce2ff;
+    text-anchor: middle;
+    font-size: 13px;
+}
+
+.legend-text {
+    fill: #a8abc2;
+    font-size: 12px;
+}
+
+.transition-list {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.transition-item {
+    padding: 13px;
+    background: #252e49;
+    border-radius: 7px;
+    color: #dce2ff;
+}
+
+.accept-text {
+    color: #4ade80;
+}
+
+.reject-text {
+    color: #ff7777;
+}
+
+.final-state {
+    margin-top: 20px;
+    padding: 15px;
+    background: #252e49;
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    color: #888fae;
+    padding: 20px;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .rules {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+        padding: 17px;
+    }
+}
