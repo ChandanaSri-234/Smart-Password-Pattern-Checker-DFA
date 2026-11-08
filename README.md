@@ -73,10 +73,10 @@ Smart-Password-Pattern-Checker-DFA/
 ## 📸 Application Screenshots
 
 ### Homepage
-![Homepage](screenshots/homepage.png)
+screenshots/Home_Page.png
 
 ### Valid Password
-![Valid Password](screenshots/validpassword1.png)
+
 
 ### Invalid Password
 ![Invalid Password](screenshots/Invalidpassword.png)
