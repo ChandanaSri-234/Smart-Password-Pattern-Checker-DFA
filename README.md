@@ -126,11 +126,12 @@ https://smart-password-pattern-checker-dfa.onrender.com
 
 **Project Title:** Smart Password Pattern Checker Using DFA
 
-**Domain:** Theory of Computation / Automata Theory
+**Domain:** Automata Theory and Compiler Design
 
 **Implementation:** Python and Flask
 
 ## 👩‍💻 Author
 
+A Chandana Sri
 Developed as an academic case study project.
 
